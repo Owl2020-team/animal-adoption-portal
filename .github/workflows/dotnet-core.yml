@@ -52,3 +52,9 @@ jobs:
           path: ./Artifacts/
       - name: Show Me Directory
         run: ls -R ./Artifacts
+      - name: Azure WebApp
+        uses: Azure/webapps-deploy@v2
+        with:
+          app-name: Team-Owl2020
+          publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
+          package: ./Artifacts/
