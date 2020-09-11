@@ -21,7 +21,7 @@ namespace AnimalAdoption.Common.Logic
 
         public string GetLoginUserFromId(string id)
         {
-            //switch name to convert from object to name
+            //switch name to convert from object to owl
             string name = "";
             switch (id)
             {
