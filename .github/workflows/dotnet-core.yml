@@ -58,3 +58,8 @@ jobs:
           app-name: Team-Owl2020
           publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
           package: ./Artifacts/
+      - name: Azure App Service Settings
+        uses: Azure/appservice-settings@v1
+        with:
+          app-name: Team-Owl2020
+          app-settings-json: '[ { name: "GlobalPassword", value: "${{ secrets.GLOBALPASSWORD }}" } ]'
