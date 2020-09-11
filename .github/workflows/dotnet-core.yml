@@ -41,3 +41,25 @@ jobs:
       run: dotnet pack --configuration Release ${{ env.LogicProjectPath }}
     - name: Push package to GitHub registry
       run: dotnet nuget push ${{ env.LogicProjectPath }}/**/*.nupkg --skip-duplicate
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Web Artifacts
+        uses: actions/download-artifact@v2.0.5
+        with:
+          name: Website-Artifacts
+          path: ./Artifacts/
+      - name: Show Me Directory
+        run: ls -R ./Artifacts
+      - name: Azure WebApp
+        uses: Azure/webapps-deploy@v2
+        with:
+          app-name: Team-Owl2020
+          publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
+          package: ./Artifacts/
+      - name: Azure App Service Settings
+        uses: Azure/appservice-settings@v1
+        with:
+          app-name: Team-Owl2020
+          app-settings-json: '[ { name: "GlobalPassword", value: "${{ secrets.GLOBALPASSWORD }}" } ]'
