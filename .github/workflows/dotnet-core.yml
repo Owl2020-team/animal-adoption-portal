@@ -23,3 +23,11 @@ jobs:
       run: dotnet build --configuration Release --no-restore
     - name: Unit Test
       run: dotnet test AnimalAdoption.Web.Portal.UnitTests --no-restore --verbosity normal 
+    - name: Publish Website
+      run: dotnet publish AnimalAdoption.Web.Portal --output ./publish --no-build --configuration Release  
+    - name: Upload website Build Artifact
+      uses: actions/upload-artifact@v2.1.4
+      with:
+        name: Website-Artifacts
+        path: ./publish/
+        if-no-files-found: error
