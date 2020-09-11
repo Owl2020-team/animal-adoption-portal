@@ -15,13 +15,13 @@ namespace AnimalAdoption.Common.Logic
                 "icecream",
                 "basketball",
                 "orange",
-                "placeholder"
+                "Owl"
             };
         }
 
         public string GetLoginUserFromId(string id)
         {
-            //switch name to convert from object to name
+            //switch name to convert from object to owl
             string name = "";
             switch (id)
             {
@@ -41,7 +41,7 @@ namespace AnimalAdoption.Common.Logic
                     name = "Murphy";
                     break;
                 case "placeholder":
-                    name = "Placeholder";
+                    name = "Owl";
                     break;
             }
             return name;
