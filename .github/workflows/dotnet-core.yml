@@ -11,12 +11,18 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    env:
+      GitHubPackageFeedUrl: https://nuget.pkg.github.com/Owl2020-team/index.json
+      LogicProjectPath: ${{ github.WORKSPACE }}/AnimalAdoption.Common.Logic
+
     steps:
     - uses: actions/checkout@v2
-    - name: Setup .NET Core
+    - name: Setup .NET Core @ Latest
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 3.1.301
+        source-url: ${{ env.GitHubPackageFeedUrl }}
+      env:
+        NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Install dependencies
       run: dotnet restore
     - name: Build
@@ -31,7 +37,7 @@ jobs:
         name: Website-Artifacts
         path: ./publish/
         if-no-files-found: error
-    - name: Nuget Package
-      run: dotnet pack --configuration Release --no-restore --output ./Nuget AnimalAdoption.Common.Logic/AnimalAdoption.Common.Logic.csproj
-    - name: Nuget Publish
-      run: dotnet nuget push "./Nuget/*.nupkg"
+    - name: Package up project
+      run: dotnet pack --configuration Release ${{ env.LogicProjectPath }}
+    - name: Push package to GitHub registry
+      run: dotnet nuget push ${{ env.LogicProjectPath }}/**/*.nupkg --skip-duplicate
