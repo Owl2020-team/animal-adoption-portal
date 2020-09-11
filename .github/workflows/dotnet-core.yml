@@ -31,3 +31,7 @@ jobs:
         name: Website-Artifacts
         path: ./publish/
         if-no-files-found: error
+    - name: Nuget Package
+      run: dotnet pack --configuration Release --no-restore --output ./Nuget AnimalAdoption.Common.Logic/AnimalAdoption.Common.Logic.csproj
+    - name: Nuget Publish
+      run: dotnet nuget push "./Nuget/*.nupkg"
