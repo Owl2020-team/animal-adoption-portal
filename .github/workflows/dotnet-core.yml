@@ -42,6 +42,7 @@ jobs:
     - name: Push package to GitHub registry
       run: dotnet nuget push ${{ env.LogicProjectPath }}/**/*.nupkg --skip-duplicate
   deploy:
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Download Web Artifacts
